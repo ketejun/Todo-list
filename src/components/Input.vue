@@ -5,7 +5,7 @@
 </template>
 
 <script>
-	// import bus from '../js/bus.js';
+	import bus from '../js/bus.js';
 	export default {
 
 		name: 'Input',
@@ -17,10 +17,13 @@
 		},
 		methods: {
 			handlAdd: function(){
-				this.arr.push(this.info);
-				console.log(this.arr);
-				this.info = '';
-				bus.$emit('con-text',this.arr);
+				if (this.info != '') {
+					this.arr.push(this.info);
+					this.info = '';
+					bus.$emit('con-text',this.arr);
+				}
+				// console.log(this.arr);
+				
 			}
 		}
 	}

@@ -12,7 +12,7 @@ import Header from './components/Header';
 import Input from './components/Input';
 import Content from './components/Content';
 
-import bus from './js/bus.js';
+// import bus from './js/bus.js';
 
 export default {
   name: 'App',

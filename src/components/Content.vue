@@ -1,22 +1,24 @@
 <template>
 	<div id="content">
 		<ul class="todo-content">
-			<li>
+			<li v-for='item in msg'>
 				<input type="checkbox" class="chb">
-				<span class="text">好好学习，天天向上</span>
+				<span class="text">{{item}}</span>
 				<button class="btn">删除</button>
 			</li>
-			<li>
+			<!-- <li>
 				<input type="checkbox" class="chb">
 				<span class="text">好好学习，天天向上</span>
 
 				<button class="btn">删除</button>
-			</li>
+			</li> -->
 		</ul>
 	</div>
 </template>
 
 <script>
+	import bus from '../js/bus.js';
+
 	export default {
 		name: 'Content',
 		data: function(){
@@ -30,6 +32,7 @@
 		mounted: function(){
 			bus.$on('con-text', (val) => {
 				this.msg = val;
+				// console.log(this.msg);
 			})
 		}
 	}
