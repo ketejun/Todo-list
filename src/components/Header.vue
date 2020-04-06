@@ -1,11 +1,18 @@
 <template>
 	<div class="header">
-		<span>Tode-list</span>
+		<span>{{msg}}</span>
 	</div>
 </template>
 
 <script>
-	
+	export default {
+		name: 'Header',
+		data: function(){
+			return {
+				msg: 'Todo-list'
+			}
+		}
+	}
 </script>
 
 <style>
