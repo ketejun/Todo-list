@@ -56,7 +56,6 @@
 		position: relative;
 		height: 46px;
 		line-height: 44px;
-		/*text-align: center;*/
 		margin-bottom: 10px;
 		/*background-color: #ccc;*/
 		box-shadow: 0 0 10px #ccc;
@@ -69,8 +68,12 @@
 		transform: translateY(-50%);
 	}
 	.todo-content li .text {
+		width: 300px;
 		font-size: 22px;
 		margin: 0 50px;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow:ellipsis;
 	}
 	.todo-content li .btn {
 		position: absolute;
