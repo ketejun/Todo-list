@@ -1,15 +1,26 @@
 <template>
 	<div class="inpt">
-		<input type="text" placeholder="what's to do?" id="textId">
+		<input type="text" v-on:keyup.enter="handlAdd" v-model="info" placeholder="what's to do?" id="textId">
 	</div>
 </template>
 
 <script>
+	// import bus from '../js/bus.js';
 	export default {
+
 		name: 'Input',
 		data: function(){
 			return {
-
+				info: '',
+				arr: []
+			}
+		},
+		methods: {
+			handlAdd: function(){
+				this.arr.push(this.info);
+				console.log(this.arr);
+				this.info = '';
+				bus.$emit('con-text',this.arr);
 			}
 		}
 	}

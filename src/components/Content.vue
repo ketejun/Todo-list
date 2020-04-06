@@ -9,6 +9,7 @@
 			<li>
 				<input type="checkbox" class="chb">
 				<span class="text">好好学习，天天向上</span>
+
 				<button class="btn">删除</button>
 			</li>
 		</ul>
@@ -20,8 +21,16 @@
 		name: 'Content',
 		data: function(){
 			return {
-
+				msg: []
 			}
+		},
+		methods: {
+
+		},
+		mounted: function(){
+			bus.$on('con-text', (val) => {
+				this.msg = val;
+			})
 		}
 	}
 </script>
