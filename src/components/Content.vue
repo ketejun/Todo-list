@@ -2,10 +2,16 @@
 	<div id="content">
 		<ul class="todo-content">
 			<li v-for='(item,index) in msg'>
-				<input type="checkbox" class="chb" :disabled="flag" v-on:click="selected">
-				<span class="text">{{item}}</span>
-				<button class="btn" v-on:click="deleteTodo(index)">删除</button>
+				<span v-show="editIndex == index">
+					<input type="text" @keyup.esc="disEdit(item,index)" @keyup.enter="editItem(item,index)" class="text" v-model="tempTitle">
+				</span>
+				<span v-show="editIndex != index">
+					<input type="checkbox" class="chb" v-model="item.done">
+					<span class="text" v-on:dblclick="toEdit(item,index)">{{item.title}}</span>
+					<button class="btn" v-on:click="deleteTodo(index)">删除</button>
+				</span>
 			</li>
+			<div><span>已经完成({{doneList.length}})</span></div>
 		</ul>
 	</div>
 </template>
@@ -17,21 +23,47 @@
 		name: 'Content',
 		data: function(){
 			return {
-				msg: [],
-				flag: false
+				msg: [
+					{
+						title: 'goodstudy',
+						done: false
+					},
+					{
+						title: 'daydayup',
+						done: false
+					}
+				],
+				editIndex: null,
+				tempTitle: null
 			}
 		},
 		methods: {
+			// 删除
 			deleteTodo: function(num){
 				this.msg.splice(num,1);
 			},
-			selected: function(){
-				this.flag != this.flag;
+			toEdit: function(item,index){
+				this.editIndex = index;
+				this.tempTitle = item.title;
+			},
+			editItem:function(item,index){
+				item.title = this.tempTitle;
+				this.tempTitle = '';
+				this.editIndex = null;
+			},
+			disEdit: function(item,index){
+				this.tempTitle = '';
+				this.editIndex = null;
+			}
+		},
+		computed: {
+			doneList: function(){
+				return this.msg.filter(item => item.done)
 			}
 		},
 		mounted: function(){
 			bus.$on('con-text', (val) => {
-				this.msg = val;
+				this.msg.push(val);
 			})
 		}
 	}
@@ -68,6 +100,8 @@
 	}
 	.todo-content li .text {
 		display: inline-block;
+		height: 40px;
+		line-height: 40px;
 		width: 70%;
 		font-size: 22px;
 		margin: 0 50px;

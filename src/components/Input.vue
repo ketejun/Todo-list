@@ -12,18 +12,21 @@
 		data: function(){
 			return {
 				info: '',
-				arr: []
+				list: {
+					title:'',
+					done: false
+				}
 			}
 		},
 		methods: {
+			// 添加
 			handlAdd: function(){
 				if (this.info != '') {
-					this.arr.push(this.info);
+					// this.list.push({title:this.info,done:false});
+					this.list.title = this.info;
 					this.info = '';
-					bus.$emit('con-text',this.arr);
+					bus.$emit('con-text',this.list);
 				}
-				// console.log(this.arr);
-				
 			}
 		}
 	}
