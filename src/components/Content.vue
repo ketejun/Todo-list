@@ -1,17 +1,11 @@
 <template>
 	<div id="content">
 		<ul class="todo-content">
-			<li v-for='item in msg'>
-				<input type="checkbox" class="chb">
+			<li v-for='(item,index) in msg'>
+				<input type="checkbox" class="chb" :disabled="flag" v-on:click="selected">
 				<span class="text">{{item}}</span>
-				<button class="btn">删除</button>
+				<button class="btn" v-on:click="deleteTodo(index)">删除</button>
 			</li>
-			<!-- <li>
-				<input type="checkbox" class="chb">
-				<span class="text">好好学习，天天向上</span>
-
-				<button class="btn">删除</button>
-			</li> -->
 		</ul>
 	</div>
 </template>
@@ -23,16 +17,21 @@
 		name: 'Content',
 		data: function(){
 			return {
-				msg: []
+				msg: [],
+				flag: false
 			}
 		},
 		methods: {
-
+			deleteTodo: function(num){
+				this.msg.splice(num,1);
+			},
+			selected: function(){
+				this.flag != this.flag;
+			}
 		},
 		mounted: function(){
 			bus.$on('con-text', (val) => {
 				this.msg = val;
-				// console.log(this.msg);
 			})
 		}
 	}
@@ -68,7 +67,8 @@
 		transform: translateY(-50%);
 	}
 	.todo-content li .text {
-		width: 300px;
+		display: inline-block;
+		width: 70%;
 		font-size: 22px;
 		margin: 0 50px;
 		overflow: hidden;
