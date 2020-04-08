@@ -12,20 +12,32 @@
 		data: function(){
 			return {
 				info: '',
-				list: {
-					title:'',
-					done: false
-				}
+				// list: {
+				// 	// title:'',
+				// 	// done: false
+				// }
+				list: [
+					// {
+					// 	title: 'goodstudy',
+					// 	done: false
+					// },
+					// {	
+					// 	title: 'daydayup',
+					// 	done: false
+					// }
+				]
 			}
 		},
 		methods: {
 			// 添加
 			handlAdd: function(){
 				if (this.info != '') {
-					// this.list.push({title:this.info,done:false});
-					this.list.title = this.info;
-					this.info = '';
+					this.list.unshift({title:this.info, done: false});
+					// this.list.title = this.info;		
 					bus.$emit('con-text',this.list);
+
+					// console.log(this.list.title,this.list.done);
+					this.info = '';
 				}
 			}
 		}

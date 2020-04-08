@@ -1,9 +1,15 @@
 <template>
 	<div id="content">
 		<ul class="todo-content">
-			<li v-for='(item,index) in msg'>
+			<li :key="index" v-for='(item,index) in msg'>
 				<span v-show="editIndex == index">
-					<input type="text" @keyup.esc="disEdit(item,index)" @keyup.enter="editItem(item,index)" class="text" v-model="tempTitle">
+					<input type="text" 
+					@keyup.esc="disEdit(item,index)" 
+					@keyup.enter="editItem(item,index)" 
+					class="text" 
+					v-model="tempTitle"
+					v-focus="editIndex == index"
+					>
 				</span>
 				<span v-show="editIndex != index">
 					<input type="checkbox" class="chb" v-model="item.done">
@@ -24,17 +30,24 @@
 		data: function(){
 			return {
 				msg: [
-					{
-						title: 'goodstudy',
-						done: false
-					},
-					{
-						title: 'daydayup',
-						done: false
-					}
+					// {
+					// 	title: 'goodstudy',
+					// 	done: false
+					// },
+					// {	
+					// 	title: 'daydayup',
+					// 	done: false
+					// }
 				],
 				editIndex: null,
 				tempTitle: null
+			}
+		},
+		directives: {
+			focus: function(el,data){
+				if (data.value) {
+					el.focus();
+				}
 			}
 		},
 		methods: {
@@ -42,15 +55,21 @@
 			deleteTodo: function(num){
 				this.msg.splice(num,1);
 			},
+
+			// 双击编辑
 			toEdit: function(item,index){
+				// console.log(item,index);
 				this.editIndex = index;
 				this.tempTitle = item.title;
 			},
+
+			// 按键回车
 			editItem:function(item,index){
 				item.title = this.tempTitle;
 				this.tempTitle = '';
 				this.editIndex = null;
 			},
+			// esc键回撤
 			disEdit: function(item,index){
 				this.tempTitle = '';
 				this.editIndex = null;
@@ -58,12 +77,13 @@
 		},
 		computed: {
 			doneList: function(){
-				return this.msg.filter(item => item.done)
+				return this.msg.filter(item => item.done);
 			}
 		},
 		mounted: function(){
 			bus.$on('con-text', (val) => {
-				this.msg.push(val);
+				// this.msg.unshift(val);
+				this.msg = val;
 			})
 		}
 	}
